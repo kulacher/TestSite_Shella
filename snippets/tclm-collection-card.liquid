@@ -1,0 +1,35 @@
+{%- liquid
+  assign c = collection
+  assign title = c.title | default: ''
+  assign url = c.url | default: '#'
+  assign img = c.featured_image
+
+  assign show_title = show_title
+  assign show_overlay = show_overlay
+-%}
+
+<a class="tclm__card" href="{{ url }}" aria-label="{{ title | escape }}">
+  {%- if img != blank -%}
+    <img
+      class="tclm__img"
+      src="{{ img | image_url: width: 800 }}"
+      srcset="
+        {{ img | image_url: width: 320 }} 320w,
+        {{ img | image_url: width: 480 }} 480w,
+        {{ img | image_url: width: 640 }} 640w,
+        {{ img | image_url: width: 800 }} 800w
+      "
+      sizes="(min-width: 990px) 180px, 25vw"
+      loading="lazy"
+      alt="{{ img.alt | default: title | escape }}"
+    >
+  {%- else -%}
+    {{ 'collection-1' | placeholder_svg_tag: 'tclm__placeholder' }}
+  {%- endif -%}
+
+  {%- if show_title and title != blank -%}
+    <span class="tclm__titleOverlay" style="{% unless show_overlay %}background: transparent; text-shadow: 0 1px 2px rgba(0,0,0,.8);{% endunless %}">
+      {{ title }}
+    </span>
+  {%- endif -%}
+</a>

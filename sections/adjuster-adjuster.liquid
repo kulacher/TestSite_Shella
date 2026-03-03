@@ -1,0 +1,30 @@
+<style>
+.more-margin {
+height: 1px;
+margin-top: {{section.settings.more_margin_top}}vh;
+}
+</style>
+<div class="more-margin"></div>
+
+{% schema %}
+{
+"name": "上下間距調節器",
+"settings": [
+{
+"type": "range",
+"id": "more_margin_top",
+"label": "左右拖動調節間距",
+"max": 30,
+"min": -70,
+"step": 1,
+"default": 0
+}
+],
+"presets": [
+{
+"name": "上下間距調節器",
+"category": "Advanced"
+}
+]
+}
+{% endschema %}

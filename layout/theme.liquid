@@ -1,0 +1,179 @@
+<!doctype html>
+{%- if shop.locale == 'ar' or shop.locale == 'he' -%}
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}" dir="rtl"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}" dir="rtl"> <!--<![endif]-->
+{%- else -%}
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"{% if settings.layout_enable_rtl %} dir="rtl"{% endif %}> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"{% if settings.layout_enable_rtl %} dir="rtl"{% endif %}> <!--<![endif]-->
+{%- endif -%}
+
+<head>
+  {% capture get_content_for_header %}{{ content_for_header }}{% endcapture %}
+  {% include 'head' %}
+  <style>
+/* Hide menu titles on mobile */
+@media (max-width: 991px) {
+    .footer__section-head h5.d-lg-none {
+        display: none !important;
+    }
+}
+
+/* Hide plus buttons on mobile */
+@media (max-width: 991px) {
+    .footer__section-btn.d-lg-none {
+        display: none !important;
+    }
+}
+
+/* Ensure footer menu content is always visible on mobile */
+@media (max-width: 991px) {
+    .footer__section-content {
+        display: block !important;
+    }
+}
+
+/* Hide divider lines between menus on mobile, keep only the one above the store logo */
+@media (max-width: 991px) {
+    .footer__border.d-lg-none {
+        display: none !important;
+    }
+    .footer__border-top.d-lg-none {
+        display: block !important; /* Keep the divider above the store logo */
+    }
+}
+</style>
+
+<script>
+// Disable accordion functionality on mobile
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 991) {
+        // Select all accordion buttons
+        const accordionButtons = document.querySelectorAll('.footer__section-head[data-js-accordion-button]');
+        
+        accordionButtons.forEach(button => {
+            // Remove accordion button functionality
+            button.removeAttribute('data-js-accordion-button');
+            button.classList.remove('open');
+            
+            // Ensure the content is always visible
+            const content = button.nextElementSibling;
+            if (content && content.hasAttribute('data-js-accordion-content')) {
+                content.removeAttribute('data-js-accordion-content');
+                content.style.display = 'block';
+            }
+            
+            // Remove the accordion attribute from the section
+            const section = button.closest('.footer__section');
+            if (section) {
+                section.removeAttribute('data-js-accordion');
+            }
+        });
+    }
+});
+</script>
+{% include 'pagefly-app-header' %}</head>
+
+<body{% render 'layout-get-body-attributes' %}>
+{% include 'layout-get-includes-start' %}
+{%- if settings.product_show_custom_options and settings.product_enable_variants_section -%}
+  {% section 'product-variants' %}
+{%- endif -%}
+{% sections 'header-group' %}
+<main id="MainContent">
+  {%- if request.page_type == 'page' or request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'list-collections' or request.page_type == 'article' or request.page_type == 'blog' -%}
+    {% include 'breadcrumbs' %}
+  {%- elsif request.page_type == 'collection' -%}
+    <div id="CollectionBreadcrumbs">
+      {% include 'breadcrumbs' %}
+    </div>
+  {%- endif -%}
+  {{ content_for_layout }}
+</main>
+{% sections 'footer-group' %}
+{% include 'popups' %}
+{% include 'footbar' %}
+
+{%- if settings.presentation_enable or template == 'product' and settings.product_info_page_show_usage_info_sidebar -%}
+  {% include 'fixed-sidebar' %}
+{%- endif -%}
+
+// Store scroll position when user scrolls
+window.addEventListener('scroll', function() {
+  localStorage.setItem('scrollPosition', window.scrollY);
+});
+
+// Retrieve and scroll to stored position when user returns to the page
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollPosition = localStorage.getItem('scrollPosition');
+  if (scrollPosition) {
+    setTimeout(function() {
+      window.scrollTo(0, scrollPosition);
+      localStorage.removeItem('scrollPosition'); // Clear the stored position after scrolling
+    }, 100); // Delay scrolling by 100ms to ensure page elements are fully loaded
+  }
+});
+
+{% include 'templates' %}
+{% include 'layout-get-includes-end' %}
+<!-- START APPS -->
+
+{%- if settings.app_klarna_enable -%}
+  <!-- start Klarna app -->
+  <script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} window.KlarnaThemeGlobals.data_purchase_amount={{product.first_available_variant.price}};window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+  <!-- end Klarna app -->
+{%- endif -%}
+
+{%- if settings.app_growave_enable -%}
+  <!-- start Growave app -->
+  {% capture the_snippet_content %}{% render 'socialshopwave-helper' %}{% endcapture %}
+  {%- unless the_snippet_content contains 'Liquid error' -%}
+    {{ the_snippet_content }}
+  {%- endunless -%}
+  <script>
+    sswRun(function(){
+      var intervalId = setInterval(function() {
+        if(ssw('.ssw-stars.ssw-stars-large').length) {
+          ssw('.ssw-stars.ssw-stars-large').on('click', function() {
+            ssw('.product-page__tabs .tabs__btn[data-tab="reviews"]').click();
+            ssw('html, body').animate({
+              scrollTop: ssw("#ssw-widget-recommends-html").offset().top - 200
+            }, 100);
+          });
+          clearInterval(intervalId);
+        }
+      },1000);
+    });
+  </script>
+  <!-- end Growave app -->
+{%- endif -%}
+
+{%- if settings.reviews_type == 'loox' -%}
+  {{ shop.metafields.loox["global_html_body"] }}
+  <style>
+    .loox-rating .loox-icon {
+      font-size: 1.22em;
+    }
+    .loox-rating .loox-icon:not(:last-child) {
+      margin-right: 5px;
+    }
+    .loox-rating span {
+      margin-left: 2px;
+      vertical-align: 2px;
+    }
+  </style>
+{%- endif -%}
+
+<!-- END APPS -->
+<script>window.performance.mark('theme:DOM:loaded');</script>
+{% comment %}
+{% render 'js-api' %}
+{% endcomment %}
+{% if template.name contains 'collection' or template.name contains 'product' %}
+<style>
+#shopify-section-sections--25807736701291__home_builder_cWHVGq {
+    display: none !important;
+}
+</style>
+{% endif %}
+</body>
+</html>

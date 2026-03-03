@@ -1,0 +1,512 @@
+<h1 class="h3 mt-30 text-center">{{ page_title }}</h1>
+{%- case section.settings.size_of_columns_mobile -%}
+    {%- when '1' -%}{%- assign grid_mobile = 'col-12' -%}
+    {%- when '2' -%}{%- assign grid_mobile = 'col-6' -%}
+{%- endcase -%}
+{%- case section.settings.size_of_columns -%}
+    {%- when '1' -%}{%- assign grid = grid_mobile | append: ' col-md-12' -%}
+    {%- when '2' -%}{%- assign grid = grid_mobile | append: ' col-md-6' -%}
+    {%- when '3' -%}{%- assign grid = grid_mobile | append: ' col-md-6 col-lg-4 ' -%}
+    {%- when '4' -%}{%- assign grid = grid_mobile | append: ' col-md-6 col-lg-3' -%}
+    {%- when '5' -%}{%- assign grid = grid_mobile | append: ' col-sm-6 col-md-4 col-lg-2-5' -%}
+    {%- when '6' -%}{%- assign grid = grid_mobile | append: ' col-sm-6 col-md-4 col-lg-2' -%}
+{%- endcase -%}
+<div data-section-id="{{ section.id }}" data-section-type="main-list-collections">
+    <div class="container">
+        <div class="list-collections mb-40 mb-lg-30">
+            <div class="row{% if section.settings.masonry_enable %} masonry invisible{% endif %}">
+                {%- if section.settings.display_type == 'selected' and section.settings.sort == 'manually' -%}
+                    {%- for block in section.blocks -%}
+                        {%- if block.settings.for_collection != blank -%}
+                            {% capture selected_collections %}{{ selected_collections }}{% if selected_collections != blank %}|||{% endif %}{{ block.settings.for_collection }}{% endcapture %}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- assign selected_collections = selected_collections | split: '|||' -%}
+                {%- else -%}
+                    {%- assign selected_collections = collections -%}
+                    {%- case section.settings.sort -%}
+                        {% when 'products_high' or 'products_low' %}
+                            {%- assign selected_collections = selected_collections | sort: 'all_products_count' -%}
+                        {% when 'date' or 'date_reversed' %}
+                            {%- assign selected_collections = selected_collections | sort: 'published_at' -%}
+                    {%- endcase -%}
+                    {%- if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed' -%}
+                        {%- assign selected_collections = selected_collections | reverse -%}
+                    {%- endif -%}
+                {%- endif -%}
+                {%- for collection in selected_collections -%}
+                  {% unless collection.handle == "online-game" or collection.handle == "芝芝" or collection.handle == "戈馬" or collection.handle == "布洛尼" or collection.handle == "蕾貝卡-多雷斯羅薩篇" or collection.handle == "白星-魚人島篇" or collection.handle == "薇薇公主-阿拉巴斯坦篇" or collection.handle == "革命軍" or collection.handle == "艾斯" or collection.handle == "鷹眼" 
+or collection.handle == "紅心海賊團" or collection.handle == "天音永遠" or collection.handle == "齋賀玲" or collection.handle == "愛姆露" or collection.handle == "桑樂-陽務樂郎" or collection.handle == "白老" or collection.handle == "阿爾比思" or collection.handle == "希洛" or collection.handle == "紅丸" or collection.handle == "蒼影" or collection.handle == "紫苑" or collection.handle == "朱菜" or collection.handle == "魯米納斯" or collection.handle == "迪亞布羅" or collection.handle == "利姆露" or collection.handle == "武士刀" or collection.handle == "波奇塔" or collection.handle == "鯊魚魔人" or collection.handle == "天使惡魔" or collection.handle == "power" or collection.handle == "淀治-鏈鋸人" or collection.handle == "早川秋" or collection.handle == "真紀真" or collection.handle == "蕾潔" or collection.handle == "里維" or collection.handle == "阿爾敏" or collection.handle == "米卡莎" or collection.handle == "國神鍊介" or collection.handle == "糸師凛" or collection.handle == "千切豹馬" or collection.handle == "御影玲王" or collection.handle == "潔世一" or collection.handle == "大英雄聯盟" or collection.handle == "木偶奇遇記" or collection.handle == "小公主蘇菲亞" or collection.handle == "梅莉達" or collection.handle == "白雪公主" or collection.handle == "花木蘭" or collection.handle == "灰姑娘" or collection.handle == "阿拉丁" or collection.handle == "美女與野獸" or collection.handle == "小魚仙" or collection.handle == "怪獸公司" or collection.handle == "鱷魚山先生" or collection.handle == "不理不理左衛門" or collection.handle == "小白" or collection.handle == "野原廣志-美冴" or collection.handle == "雙葉幼稚園" or collection.handle == "小葵" or collection.handle == "野原新之助" or collection.handle == "欣梅爾" or collection.handle == "費倫" or collection.handle == "芙莉蓮" or collection.handle == "愛野美奈子" or collection.handle == "木野真琴" or collection.handle == "火野麗" or collection.handle == "水野亞美" or collection.handle == "小小兔" or collection.handle == "月野兔-倩尼迪" or collection.handle == "桃地再不斬" or collection.handle == "奇拉比" or collection.handle == "綱手" or collection.handle == "九喇嘛" or collection.handle == "大蛇丸" or collection.handle == "千手柱間" or collection.handle == "李洛克" or collection.handle == "我愛羅" or collection.handle == "波風湊" or collection.handle == "卡卡西" or collection.handle == "春野櫻" or collection.handle == "內輪佐助" or collection.handle == "渦卷鳴門" or collection.handle == "乾青宗" or collection.handle == "柴八戒" or collection.handle == "場地圭介" or collection.handle == "三谷隆" or collection.handle == "黑川伊佐那" or collection.handle == "龍宮寺堅" or collection.handle == "松野千冬" or collection.handle == "佐野萬次郎" or collection.handle == "戰鬥-冒險-新" or collection.handle == "上原由衣" or collection.handle == "大和敢助" or collection.handle == "降谷零-安室透" or collection.handle == "怪盗基德" or collection.handle == "赤井秀一" or collection.handle == "灰原哀" or collection.handle == "江戶川柯南" or collection.handle == "渚薰" or collection.handle == "真希波" or collection.handle == "綾波麗" or collection.handle == "明日香" or collection.handle == "you-re-next" or collection.handle == "潮爆牛王" or collection.handle == "霍克斯" or collection.handle == "all-for-one" or collection.handle == "死柄木弔" or collection.handle == "女神納甘" or collection.handle == "渡我被身子" or collection.handle == "荼毘" or collection.handle == "奮進人" or collection.handle == "相澤消太" or collection.handle == "天喰環" or collection.handle == "青山優雅" or collection.handle == "常闇踏陰" or collection.handle == "耳郎響香" or collection.handle == "切島銳兒郎" or collection.handle == "麗日御茶子" or collection.handle == "轟焦凍" or collection.handle == "綠谷出久" or collection.handle == "星野愛" or collection.handle == "露比" or collection.handle == "有馬加奈" or collection.handle == "mem啾" or collection.handle == "壽美波" or collection.handle == "黑川茜" or collection.handle == "阿奎亞" or collection.handle == "亞白米娜" or collection.handle == "卡夫卡-怪獸8號" or collection.handle == "四之宮奇可露" or collection.handle == "市川雷諾" or collection.handle == "保科宗四郎" or collection.handle == "怪獸10號" or collection.handle == "藏馬" or collection.handle == "浦飯幽助" or collection.handle == "飛影" or collection.handle == "伊地知虹夏" or collection.handle == "伊地知星歌" or collection.handle == "伏黑甚爾" or collection.handle == "乙骨憂太" or collection.handle == "釘崎野薔薇" or collection.handle == "伏黑惠" or collection.handle == "夏油傑" or collection.handle == "虎杖悠仁" or collection.handle == "五条悟" or collection.handle == "中野五月" or collection.handle == "中野四葉" or collection.handle == "中野三玖" or collection.handle == "中野二乃" or collection.handle == "中野一花" or collection.handle == "雷姆" or collection.handle == "拉姆" or collection.handle == "愛蜜莉雅" or collection.handle == "艾姬多娜" or collection.handle == "密涅瓦" or collection.handle == "普莉希拉" or collection.handle == "四楓院夜一" or collection.handle == "朽木白哉" or collection.handle == "砕蜂" or collection.handle == "日番谷冬獅郎" or collection.handle == "黑崎一護" or collection.handle == "會長" or collection.handle == "蟻王" or collection.handle == "希索加" or collection.handle == "伊路米" or collection.handle == "團長" or collection.handle == "里昂里奧" or collection.handle == "古勒比加" or collection.handle == "基路亞" or collection.handle == "政府-海軍" 
+or collection.handle == "大和-凱多-百獸海賊團" or collection.handle == "亞瑟" or collection.handle == "奧依卡曹" or collection.handle == "艾倫" or collection.handle == "凪誠士郎" or collection.handle == "睡公主" or collection.handle == "反斗奇兵" or collection.handle == "大力士" or collection.handle == "愛麗絲夢遊仙境" or collection.handle == "冰雪奇緣" or collection.handle == "長髮公主" or collection.handle == "小飛俠" or collection.handle == "鐘樓駝俠" or collection.handle == "青蛙公主" or collection.handle == "地場衛" or collection.handle == "冥王雪奈" or collection.handle == "海王滿" or collection.handle == "天王遙" or collection.handle == "土萌螢" or collection.handle == "內輪鼬太知" or collection.handle == "爆豪勝己" or collection.handle == "戶愚呂弟" or collection.handle == "後藤一里" or collection.handle == "喜多郁代" or collection.handle == "山田涼" or collection.handle == "山本元柳齋重國" or collection.handle == "井上織姬" or collection.handle == "小岡" or collection.handle == "黃金大冒險-film-gold" or collection.handle == "達米安" or collection.handle == "彭德" or collection.handle == "黃昏" or collection.handle == "約兒" or collection.handle == "安妮亞" or collection.handle == "big-mom海賊團" or collection.handle == "沙鱷-巴洛克華克" or collection.handle == "女帝-九蛇海賊團" or collection.handle == "皮毛族-和之國" or collection.handle == "紅髮海賊團" or collection.handle == "羅渣海賊團" or collection.handle == "白鬍子海賊團" or collection.handle == "chopper" or collection.handle == "烏索普" or collection.handle == "魔人布歐" or collection.handle == "菲利一族" or collection.handle == "魯賓" or collection.handle == "骨仔" or collection.handle == "路飛" or collection.handle == "索羅" or collection.handle == "山治" or collection.handle == "娜美" or collection.handle == "franky" or collection.handle == "邪念波" or collection.handle == "真由羅" or collection.handle == "乃愛" or collection.handle == "753" or collection.handle == "喜咲亞理亞" or collection.handle == "橘美花莉" or collection.handle == "達列斯-立巴" or collection.handle == "天乃理理沙" or collection.handle == "精英軍團-菲利軍" or collection.handle == "格比達" or collection.handle == "扎馬斯-黑悟空" or collection.handle == "人造人" or collection.handle == "杜拉格斯" or collection.handle == "比達" or collection.handle == "斯路" or collection.handle == "孫悟飯" or collection.handle == "孫悟天" or collection.handle == "孫悟空" or collection.handle == "qposket" or collection.handle == "景品-闊盒" or collection.handle == "五等分" or collection.handle == "qposket-1" or collection.handle == "wcf" or collection.handle == "relax-time" or collection.handle == "大size景品" or collection.handle == "熱血-冒險" or collection.handle == "景品模型" or collection.handle == "最新上架" or collection.handle == "魔法少女-後宮番" or collection.handle == "後宮番" or collection.handle == "異世界-穿越" or collection.handle == "減價清貨" or collection.handle == "搞笑-日常" or collection.handle == "動漫週邊" or collection.handle == "偶像-歌手" or collection.handle == "動物擬人" or collection.handle == "超人-機甲-戰隊-怪獸" or collection.handle == "偵探-特務" or collection.handle == "歐美-電影" or collection.handle == "校園-青春" or collection.handle == "場景" or collection.handle == "神話" or collection.handle == "機甲類" or collection.handle == "運動番" or collection.handle == "Sanrio" or collection.handle == "美少女變身類" or collection.handle == "泳圈系列" or collection.handle == "套裝" or collection.handle == "一番賞" or collection.handle == "日常" or collection.handle == "鬼們" or collection.handle == "絆" or collection.handle == "胡蝶忍" or collection.handle == "富岡義勇" or collection.handle == "禰豆子" or collection.handle == "時透無一郎" or collection.handle == "甘露寺蜜璃" or collection.handle == "宇髓天元" or collection.handle == "竈門炭治郎" or collection.handle == "我妻善逸" or collection.handle == "嘴平伊之助" or collection.handle == "栗花落香奈乎" or collection.handle == "煉獄杏壽郎" or collection.handle == "不死川實彌" or collection.handle == "伊黑小芭內" or collection.handle == "悲鳴嶼行冥" or collection.handle == "不死川玄彌" or collection.handle == "模型景品" %}
+                    {%- if section.settings.display_type == 'selected' and section.settings.sort == 'manually' -%}
+                        {%- assign collection_obj = collections[collection] -%}
+                    {%- else -%}
+                        {%- assign collection_obj = collections[collection.handle] -%}
+                    {%- endif -%}
+                    {%- unless collection_obj.handle == 'frontpage' -%}
+                        {%- assign matches_block = null -%}
+                        {%- for block in section.blocks -%}
+                            {%- if block.settings.for_collection == collection_obj.handle -%}
+                                {%- assign matches_block = block -%}
+                                {%- break -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {%- if section.settings.display_type == 'selected' and matches_block == null -%}
+                            {%- continue -%}
+                        {%- endif -%}
+                        {%- assign image = matches_block.settings.image | default: collection_obj.image | default: collection_obj.products.first.images[0] -%}
+                        {%- assign url = matches_block.settings.url | default: collection_obj.url -%}
+                        {%- assign text_line_1 = matches_block.settings.text_line_1 | default: collection_obj.title -%}
+                        {%- if section.settings.uppercase_collection -%}
+                            {%- assign text_line_1 = text_line_1 | upcase -%}
+                        {%- endif -%}
+                        {% capture collection_info %}{{ 'list_collections.collection_info' | t: count: collection_obj.products_count }}{% endcapture %}
+                            {%- assign text_line_2 = matches_block.settings.text_line_2 -%}
+                            {%- if section.settings.show_products_count and text_line_2 == blank -%}
+                                {%- assign text_line_2 = collection_info -%}
+                            {%- endif -%}
+                            {%- assign button_1 = matches_block.settings.button_1 -%}
+                            <div class="{{ grid }} mb-20 mb-lg-30">
+                                {% render 'promobox' with block: section image: image url: url text_line_1: text_line_1 text_line_2: text_line_2 button_1: button_1 style: section.settings.style %}
+                            </div>
+                    {%- endunless -%}
+                    {%- endunless -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+{%- if section.settings.masonry_enable -%}
+    <script>
+        theme.AssetsLoader.require('scripts', 'masonry');
+    </script>
+{%- endif -%}
+
+
+{% schema %}
+{
+    "name": "t:sections.list_collections.name",
+    "settings": [
+        {
+            "type": "radio",
+            "id": "display_type",
+            "label": "t:sections.list_collections.settings.display_type.label",
+            "default": "all",
+            "options": [
+                {
+                    "value": "all",
+                    "label": "t:sections.list_collections.settings.display_type.option__1.label"
+                },
+                {
+                    "value": "selected",
+                    "label": "t:sections.list_collections.settings.display_type.option__2.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "sort",
+            "label": "t:sections.list_collections.settings.sort.label",
+            "default": "alphabetical",
+            "options": [
+                {
+                    "value": "products_high",
+                    "label": "t:sections.list_collections.settings.sort.option__1.label"
+                },
+                {
+                    "value": "products_low",
+                    "label": "t:sections.list_collections.settings.sort.option__2.label"
+                },
+                {
+                    "value": "alphabetical",
+                    "label": "t:sections.list_collections.settings.sort.option__3.label"
+                },
+                {
+                    "value": "alphabetical_reversed",
+                    "label": "t:sections.list_collections.settings.sort.option__4.label"
+                },
+                {
+                    "value": "date",
+                    "label": "t:sections.list_collections.settings.sort.option__5.label"
+                },
+                {
+                    "value": "date_reversed",
+                    "label": "t:sections.list_collections.settings.sort.option__6.label"
+                },
+                {
+                    "value": "manually",
+                    "label": "t:sections.list_collections.settings.sort.option__7.label"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_products_count",
+            "label": "t:sections.list_collections.settings.show_products_count.label",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "size_of_columns",
+            "label": "t:sections.list_collections.settings.size_of_columns.label",
+            "default": "4",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__1.label"
+                },
+                {
+                    "value": "2",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__2.label"
+                },
+                {
+                    "value": "3",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__3.label"
+                },
+                {
+                    "value": "4",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__4.label"
+                },
+                {
+                    "value": "5",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__5.label"
+                },
+                {
+                    "value": "6",
+                    "label": "t:sections.list_collections.settings.size_of_columns.option__6.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "size_of_columns_mobile",
+            "label": "t:sections.list_collections.settings.size_of_columns_mobile.label",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "t:sections.list_collections.settings.size_of_columns_mobile.option__1.label"
+                },
+                {
+                    "value": "2",
+                    "label": "t:sections.list_collections.settings.size_of_columns_mobile.option__2.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "type",
+            "label": "t:sections.list_collections.settings.type.label",
+            "default": "list-collections-1",
+            "options": [
+                {
+                    "value": "list-collections-1",
+                    "label": "t:sections.list_collections.settings.type.option__1.label"
+                },
+                {
+                    "value": "list-collections-2",
+                    "label": "t:sections.list_collections.settings.type.option__2.label"
+                },
+                {
+                    "value": "clean",
+                    "label": "t:sections.list_collections.settings.type.option__3.label"
+                },
+                {
+                    "value": "clean-bordered",
+                    "label": "t:sections.list_collections.settings.type.option__4.label"
+                },
+                {
+                    "value": "clean-hover-bordered",
+                    "label": "t:sections.list_collections.settings.type.option__5.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "style",
+            "label": "t:sections.list_collections.settings.style.label",
+            "default": "0",
+            "options": [
+                {
+                    "value": "0",
+                    "label": "t:sections.list_collections.settings.style.option__1.label"
+                },
+                {
+                    "value": "1",
+                    "label": "t:sections.list_collections.settings.style.option__2.label"
+                },
+                {
+                    "value": "2",
+                    "label": "t:sections.list_collections.settings.style.option__3.label"
+                },
+                {
+                    "value": "3",
+                    "label": "t:sections.list_collections.settings.style.option__4.label"
+                },
+                {
+                    "value": "4",
+                    "label": "t:sections.list_collections.settings.style.option__5.label"
+                },
+                {
+                    "value": "5",
+                    "label": "t:sections.list_collections.settings.style.option__6.label"
+                },
+                {
+                    "value": "6",
+                    "label": "t:sections.list_collections.settings.style.option__7.label"
+                },
+                {
+                    "value": "7",
+                    "label": "t:sections.list_collections.settings.style.option__8.label"
+                },
+                {
+                    "value": "8",
+                    "label": "t:sections.list_collections.settings.style.option__9.label"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "masonry_enable",
+            "label": "t:sections.list_collections.settings.masonry_enable.label",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "height",
+            "label": "t:sections.list_collections.settings.height.label",
+            "default": "auto",
+            "options": [
+                {
+                    "value": "auto",
+                    "label": "t:sections.list_collections.settings.height.option__1.label"
+                },
+                {
+                    "value": "30",
+                    "label": "t:sections.list_collections.settings.height.option__2.label"
+                },
+                {
+                    "value": "40",
+                    "label": "t:sections.list_collections.settings.height.option__3.label"
+                },
+                {
+                    "value": "50",
+                    "label": "t:sections.list_collections.settings.height.option__4.label"
+                },
+                {
+                    "value": "60",
+                    "label": "t:sections.list_collections.settings.height.option__5.label"
+                },
+                {
+                    "value": "70",
+                    "label": "t:sections.list_collections.settings.height.option__6.label"
+                },
+                {
+                    "value": "80",
+                    "label": "t:sections.list_collections.settings.height.option__7.label"
+                },
+                {
+                    "value": "90",
+                    "label": "t:sections.list_collections.settings.height.option__8.label"
+                },
+                {
+                    "value": "100",
+                    "label": "t:sections.list_collections.settings.height.option__9.label"
+                },
+                {
+                    "value": "110",
+                    "label": "t:sections.list_collections.settings.height.option__10.label"
+                },
+                {
+                    "value": "120",
+                    "label": "t:sections.list_collections.settings.height.option__11.label"
+                },
+                {
+                    "value": "130",
+                    "label": "t:sections.list_collections.settings.height.option__12.label"
+                },
+                {
+                    "value": "140",
+                    "label": "t:sections.list_collections.settings.height.option__13.label"
+                },
+                {
+                    "value": "150",
+                    "label": "t:sections.list_collections.settings.height.option__14.label"
+                }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "image_size",
+            "min": 200,
+            "max": 2000,
+            "step": 100,
+            "unit": "px",
+            "label": "t:sections.list_collections.settings.image_size.label",
+            "info": "t:sections.list_collections.settings.image_size.info",
+            "default": 900
+        },
+        {
+            "type": "checkbox",
+            "id": "format_pjpg",
+            "label": "t:sections.list_collections.settings.format_pjpg.label",
+            "info": "t:sections.list_collections.settings.format_pjpg.info",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "t:sections.list_collections.settings.header__1.content"
+        },
+        {
+            "type": "select",
+            "id": "animation_to",
+            "label": "t:sections.list_collections.settings.animation_to.label",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "t:sections.list_collections.settings.animation_to.option__1.label"
+                },
+                {
+                    "value": "center",
+                    "label": "t:sections.list_collections.settings.animation_to.option__2.label"
+                },
+                {
+                    "value": "top-left",
+                    "label": "t:sections.list_collections.settings.animation_to.option__3.label"
+                },
+                {
+                    "value": "top",
+                    "label": "t:sections.list_collections.settings.animation_to.option__4.label"
+                },
+                {
+                    "value": "top-right",
+                    "label": "t:sections.list_collections.settings.animation_to.option__5.label"
+                },
+                {
+                    "value": "right",
+                    "label": "t:sections.list_collections.settings.animation_to.option__6.label"
+                },
+                {
+                    "value": "bottom-right",
+                    "label": "t:sections.list_collections.settings.animation_to.option__7.label"
+                },
+                {
+                    "value": "bottom",
+                    "label": "t:sections.list_collections.settings.animation_to.option__8.label"
+                },
+                {
+                    "value": "bottom-left",
+                    "label": "t:sections.list_collections.settings.animation_to.option__9.label"
+                },
+                {
+                    "value": "left",
+                    "label": "t:sections.list_collections.settings.animation_to.option__10.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "animation_from",
+            "label": "t:sections.list_collections.settings.animation_from.label",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "t:sections.list_collections.settings.animation_from.option__1.label"
+                },
+                {
+                    "value": "center",
+                    "label": "t:sections.list_collections.settings.animation_from.option__2.label"
+                },
+                {
+                    "value": "top-left",
+                    "label": "t:sections.list_collections.settings.animation_from.option__3.label"
+                },
+                {
+                    "value": "top",
+                    "label": "t:sections.list_collections.settings.animation_from.option__4.label"
+                },
+                {
+                    "value": "top-right",
+                    "label": "t:sections.list_collections.settings.animation_from.option__5.label"
+                },
+                {
+                    "value": "right",
+                    "label": "t:sections.list_collections.settings.animation_from.option__6.label"
+                },
+                {
+                    "value": "bottom-right",
+                    "label": "t:sections.list_collections.settings.animation_from.option__7.label"
+                },
+                {
+                    "value": "bottom",
+                    "label": "t:sections.list_collections.settings.animation_from.option__8.label"
+                },
+                {
+                    "value": "bottom-left",
+                    "label": "t:sections.list_collections.settings.animation_from.option__9.label"
+                },
+                {
+                    "value": "left",
+                    "label": "t:sections.list_collections.settings.animation_from.option__10.label"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "animation_opacity",
+            "label": "t:sections.list_collections.settings.animation_opacity.label",
+            "default": "none",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "t:sections.list_collections.settings.animation_opacity.option__1.label"
+                },
+                {
+                    "value": "static",
+                    "label": "t:sections.list_collections.settings.animation_opacity.option__2.label"
+                },
+                {
+                    "value": "hover",
+                    "label": "t:sections.list_collections.settings.animation_opacity.option__3.label"
+                }
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "t:sections.list_collections.blocks.collection.name",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "for_collection",
+                    "label": "t:sections.list_collections.blocks.collection.settings.for_collection.label"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "t:sections.list_collections.blocks.collection.settings.image.label"
+                },
+                {
+                    "type": "text",
+                    "id": "text_line_1",
+                    "label": "t:sections.list_collections.blocks.collection.settings.text_line_1.label"
+                },
+                {
+                    "type": "text",
+                    "id": "text_line_2",
+                    "label": "t:sections.list_collections.blocks.collection.settings.text_line_2.label"
+                },
+                {
+                    "type": "text",
+                    "id": "button_1",
+                    "label": "t:sections.list_collections.blocks.collection.settings.button_1.label"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
